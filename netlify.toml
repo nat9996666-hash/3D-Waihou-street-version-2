@@ -1,0 +1,17 @@
+# Netlify settings for the TTM Safety Challenge games.
+# Queen Street is index.html (live board: netlify/functions/scores.mjs).
+# Waihou Road is waihou/index.html (live board: netlify/functions/waihou-scores.mjs).
+# This one file works with either game on its own, or both together.
+
+[build]
+  # Only the game pages go on the public website. Everything else stays behind the scenes.
+  # If Waihou Road is the only game here, it is also shown at the front page of the site.
+  command = "mkdir -p dist && if [ -f index.html ]; then cp index.html dist/index.html; fi && if [ -f waihou/index.html ]; then mkdir -p dist/waihou && cp waihou/index.html dist/waihou/index.html; if [ ! -f index.html ]; then cp waihou/index.html dist/index.html; fi; fi && ls dist"
+  publish = "dist"
+  functions = "netlify/functions"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+[functions]
+  node_bundler = "esbuild"
